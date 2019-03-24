@@ -1,0 +1,16 @@
+/* contanier css */
+.dl_container{
+    min-width: 800px;
+    font-size: 0;
+}
+
+/* cell css */
+.dl_cell{
+    float: left;
+    font-size: 16px;
+}
+
+/* body css */
+body{
+    margin: 0;
+}

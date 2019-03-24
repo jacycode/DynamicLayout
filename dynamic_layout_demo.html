@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>dynamic_layout_demo</title>
+    <link rel="stylesheet" href="./css/dynamic_layout.css">
+    <style>
+        .one{
+            background: red;
+        }
+        .two{
+            background: yellow;
+        }
+        .three{
+            background: blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="dl_container">
+        <!-- cell: 50x50 -->
+        <div class="dl_cell one"></div>
+        <!-- cell: 50x25 -->
+        <div class="dl_cell two"></div>
+        <!-- cell: 50x25 -->
+        <div class="dl_cell three"></div>
+    </div>
+    <script src="./js/dynamic_layout.js"></script>
+    <script>
+        var testData = [
+            {width: 50, height: 50},
+            {width: 50, height: 25},
+            {width: 50, height: 25}
+        ];
+        manualRender(testData);
+    </script>
+</body>
+</html>

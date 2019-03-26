@@ -12,40 +12,48 @@
 (function () {
     var constantKey = 'DYNAMICLAYOUT';
     /** 1 **/
-    dl_render(JSON.parse(getCookie(constantKey)));
+    dl_render(document, JSON.parse(getCookie(constantKey)));
 
     /** 2 **/
     window.manualRender = function (layoutData) {
         if (JSON.stringify(layoutData) == getCookie(constantKey)) return;
-        dl_render(layoutData);
+        dl_render(document, layoutData);
         setCookie(constantKey, JSON.stringify(layoutData));
     };
 
     /** 3 **/
     window.addEventListener('resize', function () {
-        dl_render(JSON.parse(getCookie(constantKey)));
+        dl_render(document, JSON.parse(getCookie(constantKey)));
     });
 
     /*
     **  Layout Rendering
     **
     **  para    layout data
-    **  format  [
-    **              {width: Number, height: Number},
-    **              {width: Number, height: Number},
-    **              ...
-    **          ]
+    **  format  tree
+    **          {
+    **              value: [
+    **                          { width: Number, height: Number },
+    **                          { width: Number, height: Number }
+    **                          ...
+    **                     ]
+    **              children: []
+    **          }
     **
     **  NOTE    Number <= 100, Layout Area = 100 * 100
     **/
-    function dl_render(layoutData) {
-        if (!(layoutData instanceof Array)) return;
-        var container = document.querySelector('.dl_container');
+    function dl_render(element, layoutData) {
+        if (!(layoutData instanceof Object) || !(layoutData.value instanceof Array)) return;
+        var container = element.querySelector('.dl_container');
+        if (!container) return;
         var WIDTH = container.offsetWidth;
-        var allCells = document.querySelectorAll('.dl_container .dl_cell');
-        for (var i = 0; i < allCells.length && i < layoutData.length; i ++){
-            allCells[i].style.width = parseInt(layoutData[i].width) / 100 * WIDTH + 'px';
-            allCells[i].style.height = parseInt(layoutData[i].height) / 100 * WIDTH + 'px';
+        var allCells = Array.prototype.slice.call( container.querySelectorAll('.dl_cell') ).filter(ele=>ele.parentNode===container);
+        console.log(layoutData);
+        for (var i = 0; i < allCells.length && i < layoutData.value.length; i ++){
+            allCells[i].style.width = Math.floor(parseInt(layoutData.value[i].width) / 100 * WIDTH) + 'px';
+            allCells[i].style.height = Math.floor(parseInt(layoutData.value[i].height) / 100 * WIDTH) + 'px';
+            //recursive call
+            if (layoutData.children instanceof Array) arguments.callee(allCells[i], layoutData.children[i]);
         }
     }
 

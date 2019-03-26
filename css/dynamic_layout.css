@@ -1,7 +1,7 @@
 /* contanier css */
 .dl_container{
-    min-width: 800px;
     font-size: 0;
+    overflow: auto;
 }
 
 /* cell css */

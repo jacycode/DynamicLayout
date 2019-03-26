@@ -14,12 +14,30 @@
         .three{
             background: blue;
         }
+        .four{
+            background: aqua;
+        }
+        .five{
+            background: beige;
+        }
+        .six{
+            background: brown;
+        }
     </style>
 </head>
 <body>
     <div class="dl_container">
         <!-- cell: 50x50 -->
-        <div class="dl_cell one"></div>
+        <div class="dl_cell one">
+            <div class="dl_container">
+                <!-- cell: 50x50 -->
+                <div class="dl_cell four"></div>
+                <!-- cell: 50x25 -->
+                <div class="dl_cell five"></div>
+                <!-- cell: 50x25 -->
+                <div class="dl_cell six"></div>
+            </div>
+        </div>
         <!-- cell: 50x25 -->
         <div class="dl_cell two"></div>
         <!-- cell: 50x25 -->
@@ -27,11 +45,22 @@
     </div>
     <script src="./js/dynamic_layout.js"></script>
     <script>
-        var testData = [
-            {width: 50, height: 50},
-            {width: 50, height: 25},
-            {width: 50, height: 25}
-        ];
+        var testData = {
+            value: [
+                {width: 50, height: 50},
+                {width: 50, height: 25},
+                {width: 50, height: 25}
+            ],
+            children: [
+                {
+                    value: [
+                        {width: 50, height: 50},
+                        {width: 50, height: 25},
+                        {width: 50, height: 25}
+                    ],
+                }
+            ]
+        };
         manualRender(testData);
     </script>
 </body>
